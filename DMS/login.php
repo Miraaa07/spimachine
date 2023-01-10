@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Admin | Equipment Status Tracking System</title>
+  <link rel="stylesheet" href="loginstyle.css">
+
+
+<?php include('./header.php'); ?>
+<?php include('./db_connect.php'); ?>
+<?php 
+$host="localhost";
+$user="root";
+$password="";
+$db="payroll";
+
+$data=mysqli_connect($host,$user,$password,$db);
+
+if($data===false)
+{
+	die("connection error");
+}
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+	$username=$_POST["username"];
+	$password=$_POST["password"];
+
+	$sql="SELECT * from users where username='".$username."'AND password='".$password."'";
+
+	$result=mysqli_query($data,$sql);
+
+	$row=mysqli_fetch_array($result);
+
+	if ($row["type"]==1)
+	{
+		header("location:index.php?page=home");
+	}
+
+	else if ($row["type"]==2)
+	{
+		header("location:userindex.php?page=userhome");
+	}
+}
+
+?>
+
+</head>
+
+<body>
+  <main>
+	<div class="center">
+	<div class="logo-name">
+            <div class="logo-image">
+                <img src="images/sp.png" alt="">
+				<p>SPI Downtime System<p>
+            </div>
+        </div>
+      <form id="login-form" action="#" method="POST">
+        <div class="txt_field">
+          <label for="username" class="control-label">Username</label>
+		  <input type="text" id="username" name="username" class="form-control">
+        </div>
+        <div class="txt_field">
+          <label for="password" class="control-label">Password</label>
+		  <input type="password" id="password" name="password" class="form-control">
+        </div>
+        
+        <input class="login_link" type="submit" value="Login">
+       
+      </form>
+    </div>
+  </main>
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+</body>
+<!-- <script>
+	$('#login-form').submit(function(e){
+		e.preventDefault()
+		$('#login-form button[type="button"]').attr('disabled',true).html('Logging in...');
+		if($(this).find('.alert-danger').length > 0 )
+			$(this).find('.alert-danger').remove();
+		$.ajax({
+			url:'ajax.php?action=login',
+			method:'POST',
+			data:$(this).serialize(),
+			error:err=>{
+				console.log(err)
+		$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
+
+			},
+			success:function(resp){
+				if(resp == 1){
+					location.href ='index.php?page=home';
+				}else if(resp == 2){
+					location.href ='voting.php';
+				}else{
+					$('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
+					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
+				}
+			}
+		})
+	})
+</script>	 -->
+</html>

@@ -1,0 +1,34 @@
+$host="localhost";
+$user="root";
+$password="";
+$db="users";
+
+$data=mysqli_connect($host,$user,$password,$db);
+if($data===false)
+{
+	die("connection error")
+}
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+	$username=$_POST["username"]
+	$password=$_POST["password"]
+
+	$sql="select * from login where username='".$username."'AND password='".$password."'";
+
+	$result=mysqli_query($data,$sql);
+
+	$row=mysqli_fetch_array($result);
+
+	if($row["type"]==1)
+	{
+		header("")
+	}
+
+
+
+
+
+
+<?php include('./header.php'); ?>
+<?php include('./db_connect.php'); ?>
